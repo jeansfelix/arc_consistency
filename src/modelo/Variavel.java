@@ -8,6 +8,17 @@ public class Variavel {
 	private List<Condicao> listaCondicoes;
 	private HashSet<String> dominio;
 
+	public Variavel(String id, HashSet<String> dominio)
+	{
+		this.id=id;
+		this.dominio=dominio;
+	}
+	
+	public void print()
+	{
+		System.out.println("ID: "+this.id+" | Dominio: "+this.dominio.toString());
+	}
+	
 	public Variavel(HashSet<String> dominio) throws Exception
 	{
 		/*for (int i=0 ; i<dominio.length ; i++) 
@@ -39,9 +50,9 @@ public class Variavel {
 		return dominio;
 	}
 
-	public void setDominio(HashSet<String> parmaDominio) 
+	public void setDominio(HashSet<String> paramDominio) 
 	{
-		dominio = parmaDominio;
+		dominio = paramDominio;
 	}
 
 	public String getId() 

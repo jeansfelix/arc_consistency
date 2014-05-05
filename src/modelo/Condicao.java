@@ -19,6 +19,18 @@ public class Condicao
 		return false;
 	}
 	
+	public Condicao(Variavel v1, Variavel v2, String op)
+	{
+		this.variavel1=v1;
+		this.variavel2=v2;
+		this.operacao=op;
+	}
+	
+	public void print()
+	{
+		System.out.println(variavel1.getId()+operacao+variavel2.getId());
+	}
+	
 	public Variavel getVariavel1()
 	{
 		return variavel1;

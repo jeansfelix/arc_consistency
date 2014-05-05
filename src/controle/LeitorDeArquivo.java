@@ -107,12 +107,28 @@ public class LeitorDeArquivo {
 		return result;
 	}
 
+	private int getIndiceVariavel(String id)
+	{
+		int result=-1;
+		
+		for(int i=0;i<listaVariaveis.size();i++)
+		{
+			if(listaVariaveis.get(i).getId().equals(id))
+			{
+				result=i;
+				break;
+			}
+		}
+		
+		return result;
+	}
+	
 	private void print(String s){System.out.println(s);}
 	private void print(char c){System.out.println(c);}
 	
 	private void criaCondicao(String linha)
 	{
-		int indiceCondicao;
+		int indiceCondicao,indiceVariavel1,indiceVariavel2;
 		Condicao novaCondicao;
 		Variavel variavel1,variavel2;
 		
@@ -135,6 +151,7 @@ public class LeitorDeArquivo {
 		
 		auxString.append(string.substring(0, indiceCondicao));
 		variavel1=getVariavel(auxString.toString());
+		indiceVariavel1=getIndiceVariavel(auxString.toString());
 		
 		auxString.delete(0, auxString.length());
 		auxString.append(string.charAt(indiceCondicao));
@@ -151,11 +168,16 @@ public class LeitorDeArquivo {
 		auxString.append(string.substring(indiceCondicao+1));
 		
 		variavel2=getVariavel(auxString.toString());
+		indiceVariavel2=getIndiceVariavel(auxString.toString());
 		
 		novaCondicao=new Condicao(variavel1,variavel2,operacao);
 		
 		novaCondicao.print();
 		
 		listaCondicoes.add(novaCondicao);
+		
+		listaVariaveis.get(indiceVariavel1).addCondicao(novaCondicao);
+		listaVariaveis.get(indiceVariavel2).addCondicao(novaCondicao);
+		
 	}
 }

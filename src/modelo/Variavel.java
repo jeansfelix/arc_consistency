@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Variavel {
 	{
 		this.id=id;
 		this.dominio=dominio;
+		listaCondicoes=new ArrayList<Condicao>();
 	}
 	
 	public void print()
@@ -45,6 +47,11 @@ public class Variavel {
 		listaCondicoes = paramListaCondicoes;
 	}
 
+	public void addCondicao(Condicao condicao)
+	{
+		listaCondicoes.add(condicao);
+	}
+	
 	public HashSet<String> getDominio()
 	{
 		return dominio;

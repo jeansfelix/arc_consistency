@@ -10,4 +10,6 @@ public class Main {
 		
 		console.lerArquivo();
 	}
+	
+	//testando
 }

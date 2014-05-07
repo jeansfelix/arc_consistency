@@ -18,23 +18,20 @@ public class Variavel {
 	
 	public void print()
 	{
-		System.out.println("ID: "+this.id+" | Dominio: "+this.dominio.toString());
+		System.out.println("ID: "+this.id+" | Dominio: "+this.dominio.toString() +
+				" | " + printListaCondicoes(listaCondicoes));
 	}
 	
-	public Variavel(HashSet<String> dominio) throws Exception
+	private String printListaCondicoes(List<Condicao> listaCondicoes) 
 	{
-		/*for (int i=0 ; i<dominio.length ; i++) 
+		String condicoes = "[ ";
+		
+		for (Condicao c : listaCondicoes) 
 		{
-			/*TODO
-			  Passar esse if pro leitor de arquivo
-			 */
-			
-			/*if (dominio[i] == null) 
-			{
-				throw new Exception("A formata��o do arquivo de entrada n�o estava correta");
-			}
-			this.dominio.add(dominio[i]);
-		}*/
+			condicoes += c.getVariavel1().getId() + c.getOperacao()
+					+ c.getVariavel2().getId() + " ";
+		}
+		return condicoes +="]";
 	}
 	
 	public List<Condicao> getListaCondicoes() 
@@ -82,5 +79,10 @@ public class Variavel {
 	public boolean equals(Object arg0)
 	{
 		return hashCode() == arg0.hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		return id;
 	}
 }

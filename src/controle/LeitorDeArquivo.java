@@ -12,6 +12,12 @@ import java.util.List;
 import modelo.Condicao;
 import modelo.Variavel;
 
+/**
+ * Arquivo em "/home/jeanfelix/Documents/inputCSP.txt"
+ * 
+ * 
+ **/
+
 public class LeitorDeArquivo {
 	
 	FileInputStream stream; 
@@ -83,9 +89,9 @@ public class LeitorDeArquivo {
 			dominio.add(valor);
 		}
 		
-		idVariavel=linha.substring(0, linha.indexOf(' '));
+		idVariavel=linha.substring(0, linha.indexOf('='));
 		
-		variavelNova=new Variavel(idVariavel,dominio);
+		variavelNova=new Variavel(idVariavel.trim() ,dominio);
 		
 		variavelNova.print();
 		this.listaVariaveis.add(variavelNova);
@@ -179,5 +185,17 @@ public class LeitorDeArquivo {
 		listaVariaveis.get(indiceVariavel1).addCondicao(novaCondicao);
 		listaVariaveis.get(indiceVariavel2).addCondicao(novaCondicao);
 		
+	}
+
+	
+	public List<Variavel> getListaVariaveis() 
+	{
+		return listaVariaveis;
+	}
+	
+
+	public void setListaVariaveis(List<Variavel> listaVariaveis)
+	{
+		this.listaVariaveis = listaVariaveis;
 	}
 }

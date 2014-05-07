@@ -10,11 +10,15 @@ public class Condicao
 	{
 		if (operacao.equals("=")) 
 		{
-			return objPrincipal == objSecundario;
+			return objPrincipal.equals(objSecundario);
 		}
 		if (operacao.equals("!=")) 
 		{
-			return objPrincipal != objSecundario;
+			return !objPrincipal.equals(objSecundario);
+		}
+		if (operacao.equals("<")) 
+		{
+			return Integer.parseInt(objPrincipal) < Integer.parseInt(objSecundario);
 		}
 		if (operacao.equals("modDif"))
 		{
@@ -69,6 +73,19 @@ public class Condicao
 
 	public void setOperacao(String operacao) {
 		this.operacao = operacao;
+	}
+	
+	@Override
+	public String toString() {
+		return "(" +  variavel1 + " "+ operacao + " " + variavel2 + ")";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Condicao nova = (Condicao) obj;
+		return nova.getVariavel1().equals(variavel1) &&
+				nova.getVariavel2().equals(variavel2) &&
+				nova.getOperacao().equals(operacao);
 	}
 
 }

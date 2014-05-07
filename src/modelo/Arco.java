@@ -2,24 +2,14 @@ package modelo;
 
 public class Arco {
 	private Variavel variavelPrincipal;
+	private Variavel variavelSecundaria;
 	private Condicao condicao;
 
-	public Arco(Variavel variavelPrincipal, Condicao condicao)
+	public Arco(Variavel variavelPrincipal, Variavel variavelSecundaria, Condicao condicao)
 	{
+		this.variavelSecundaria = variavelSecundaria;
 		this.variavelPrincipal = variavelPrincipal;
 		this.condicao = condicao;
-	}
-
-	public Variavel retornaVariavelSecundaria()
-	{
-		if (condicao.getVariavel1() == variavelPrincipal) 
-		{
-			return condicao.getVariavel2();
-		}
-		else 
-		{
-			return condicao.getVariavel1();
-		}
 	}
 	
 	public Variavel getVariavelPrincipal() 
@@ -42,4 +32,23 @@ public class Arco {
 		this.condicao = condicao;
 	}
 	
+	@Override
+	public String toString() {
+		return "[" + variavelPrincipal + " | " + condicao + "]";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Arco entrada = (Arco) obj;
+		
+		return this.variavelPrincipal.equals(entrada.getVariavelPrincipal()) && condicao.equals(entrada.getCondicao());
+	}
+
+	public Variavel getVariavelSecundaria() {
+		return variavelSecundaria;
+	}
+
+	public void setVariavelSecundaria(Variavel variavelSecundaria) {
+		this.variavelSecundaria = variavelSecundaria;
+	}
 }

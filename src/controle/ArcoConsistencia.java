@@ -51,7 +51,7 @@ public class ArcoConsistencia
 	{
 		Boolean change = false;
 		
-		for ( Object objPrincipal : arco.getVariavelPrincipal().getDominio() )
+		for ( String objPrincipal : arco.getVariavelPrincipal().getDominio() )
 		{
 			if (!satisfaz(arco, objPrincipal)) 
 			{
@@ -63,9 +63,9 @@ public class ArcoConsistencia
 	    return change;
 	}
 
-	private Boolean satisfaz(Arco arco, Object objPrincipal) {
+	private Boolean satisfaz(Arco arco, String objPrincipal) {
 		
-		for ( Object objSecundario : arco.retornaVariavelSecundaria().getDominio() ) 
+		for ( String objSecundario : arco.retornaVariavelSecundaria().getDominio() ) 
 		{
 			if ( arco.getCondicao().aplicaRegra(objPrincipal, objSecundario) ) 
 			{

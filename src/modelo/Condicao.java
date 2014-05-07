@@ -6,7 +6,7 @@ public class Condicao
 	private Variavel variavel2;
 	private String operacao;
 
-	public boolean aplicaRegra(Object objPrincipal, Object objSecundario)
+	public boolean aplicaRegra(String objPrincipal, String objSecundario)
 	{
 		if (operacao.equals("=")) 
 		{
@@ -16,7 +16,19 @@ public class Condicao
 		{
 			return objPrincipal != objSecundario;
 		}
+		if (operacao.equals("modDif"))
+		{
+			int indice1 = variavel1.getId().charAt(1) - '0';
+			int indice2 = variavel2.getId().charAt(1) - '0';
+			
+			return equalsModDif(Integer.parseInt(objPrincipal), Integer.parseInt(objSecundario), indice1, indice2);
+		}
 		return false;
+	}
+	
+	private boolean equalsModDif(int valor1, int valor2, int indice1, int indice2) 
+	{
+		return ( Math.abs(valor1 - valor2) == Math.abs(indice1 - indice2));	
 	}
 	
 	public Condicao(Variavel v1, Variavel v2, String op)

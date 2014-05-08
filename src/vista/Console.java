@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import modelo.Variavel;
-import controle.LeitorDeArquivo;
 import controle.ArcoConsistencia;
-import controle.Rainhas;
+import controle.LeitorDeArquivo;
 
 public class Console
 {
@@ -58,17 +57,7 @@ public class Console
 	{
 		List<Variavel> resposta = new ArrayList<Variavel>();
 
-		if (!nomeArquivoEntrada.contains("rainhas"))
-		{
-			resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
-		}
-		else
-		{
-			Rainhas algParaRainhas = new Rainhas();
-
-			List<Variavel> variaveis = algParaRainhas.inicializaCondicoesRainhas(leitor.getListaVariaveis());
-			resposta = algoritmo.arcoConsistencia(variaveis);
-		}
+		resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
 
 		if (resposta.isEmpty())
 		{

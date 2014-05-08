@@ -11,18 +11,15 @@ import java.util.List;
 
 import modelo.Condicao;
 import modelo.Variavel;
+import controle.Rainhas;
 
-/**
- * Arquivo em "/home/jeanfelix/Documents/inputCSP.txt"
- * 
- * 
- **/
 
 public class LeitorDeArquivo {
 	
 	FileInputStream stream; 
 	InputStreamReader arquivo;
 	BufferedReader lerArquivo;
+	String nomeArquivo;
 	List<Variavel> listaVariaveis;
 	List<Condicao> listaCondicoes;
 	
@@ -30,6 +27,7 @@ public class LeitorDeArquivo {
 	{
 		try 
 		{
+			this.nomeArquivo=nomeArquivo;
 			stream = new FileInputStream(nomeArquivo); 
 			arquivo = new InputStreamReader(stream); 
 			lerArquivo = new BufferedReader(arquivo);
@@ -61,6 +59,12 @@ public class LeitorDeArquivo {
 				}
 				
 				linha = lerArquivo.readLine();
+			}
+			
+			if(nomeArquivo.contains("rainhas"))
+			{
+				Rainhas r=new Rainhas();
+				this.listaVariaveis=r.inicializaCondicoesRainhas(this.listaVariaveis);
 			}
 		}
 		catch (IOException e) 

@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import modelo.Variavel;
 import controle.ArcoConsistencia;
 import controle.LeitorDeArquivo;
-import controle.Rainhas;
 
 public class GUI
 {
@@ -122,17 +121,7 @@ public class GUI
 	{
 		List<Variavel> resposta = new ArrayList<Variavel>();
 
-		if (!nomeArquivoEntrada.contains("rainhas"))
-		{
-			resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
-		}
-		else
-		{
-			Rainhas algParaRainhas = new Rainhas();
-
-			List<Variavel> variaveis = algParaRainhas.inicializaCondicoesRainhas(leitor.getListaVariaveis());
-			resposta = algoritmo.arcoConsistencia(variaveis);
-		}
+		resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
 
 		if (resposta.isEmpty())
 		{

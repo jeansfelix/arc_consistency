@@ -14,8 +14,6 @@ public class ArcoConsistencia
 	private List<Arco> listaDeArcosRemovidos;
 	private Arco arco;
 
-	
-	
 	public ArcoConsistencia() {
 		listaDeArcos = new ArrayList<Arco>();
 		listaDeArcosRemovidos = new ArrayList<Arco>();
@@ -50,7 +48,7 @@ public class ArcoConsistencia
 				if (arco.getVariavelPrincipal().getDominio().isEmpty()) 
 				{
 					System.out.println("Nao tem solucao: o dominio da variavel "+arco.getVariavelPrincipal().getId()+" e vazio");
-					return null;
+					return new ArrayList<Variavel>();
 				}
 				else
 				{

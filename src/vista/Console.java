@@ -14,83 +14,82 @@ import controle.Rainhas;
 
 public class Console
 {
-	Scanner scanner;
-	FileWriter arq;
-	String nomeArquivoEntrada;
-	String nomeArquivoSaida;
-	LeitorDeArquivo leitor;
-	ArcoConsistencia algoritmo;
-	
-	public Console() 
+	Scanner				scanner;
+	FileWriter			arq;
+	String				nomeArquivoEntrada;
+	String				nomeArquivoSaida;
+	LeitorDeArquivo		leitor;
+	ArcoConsistencia	algoritmo;
+
+	public Console()
 	{
 		algoritmo = new ArcoConsistencia();
 		scanner = new Scanner(System.in);
 		leitor = new LeitorDeArquivo();
 		nomeArquivoSaida = "";
 	}
-	
+
 	public void lerArquivo()
 	{
-			System.out.printf("Informe o nome do arquivo de entrada:\n");
-			nomeArquivoEntrada = scanner.nextLine();
-			
-			String[] split = nomeArquivoEntrada.split("\\\\");
-			
-			for (int i=0 ; i < split.length - 1 ; i++)
-			{
-				nomeArquivoSaida +=	split[i] + "\\";
-			}
-			
-			nomeArquivoSaida += "saida.txt";
-			
-			System.out.println("O arquivo de saida se encontra em "+nomeArquivoSaida);
-			
-			if (!nomeArquivoEntrada.contains(".txt")) 
-			{
-				nomeArquivoEntrada += ".txt"; 
-			}
-			
-			leitor.carregarArquivo(nomeArquivoEntrada);
-			leitor.lerLinhas();
-	}
-	
-	public void escreverArquivo(String variavel)
-	{
-		PrintWriter gravarArq = new PrintWriter(arq);
-		gravarArq.println(variavel);
+		System.out.printf("Informe o nome do arquivo de entrada:\n");
+		nomeArquivoEntrada = scanner.nextLine();
 
+		String[] split = nomeArquivoEntrada.split("\\\\");
+
+		for (int i = 0; i < split.length - 1; i++)
+		{
+			nomeArquivoSaida += split[i] + "\\";
+		}
+
+		nomeArquivoSaida += "saida.txt";
+
+		System.out.println("O arquivo de saida se encontra em " + nomeArquivoSaida);
+
+		if (!nomeArquivoEntrada.contains(".txt"))
+		{
+			nomeArquivoEntrada += ".txt";
+		}
+
+		leitor.carregarArquivo(nomeArquivoEntrada);
+		leitor.lerLinhas();
 	}
-	
-	public void executarAlg() 
+
+	public void executarAlg()
 	{
 		List<Variavel> resposta = new ArrayList<Variavel>();
-		
-		if (!nomeArquivoEntrada.contains("rainhas")) 
+
+		if (!nomeArquivoEntrada.contains("rainhas"))
 		{
 			resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
 		}
 		else
 		{
 			Rainhas algParaRainhas = new Rainhas();
-			
+
 			List<Variavel> variaveis = algParaRainhas.inicializaCondicoesRainhas(leitor.getListaVariaveis());
 			resposta = algoritmo.arcoConsistencia(variaveis);
 		}
-		
-		if (resposta.isEmpty()) 
+
+		if (resposta.isEmpty())
 		{
 			return;
 		}
-		
+
+		escreverEmArquivo(resposta);
+	}
+
+	private void escreverEmArquivo(List<Variavel> resposta)
+	{
 		try
 		{
 			arq = new FileWriter(nomeArquivoSaida);
-		
-			for (Variavel var : resposta) 
+
+			for (Variavel var : resposta)
 			{
-				escreverArquivo(var.print());
+				PrintWriter gravarArq = new PrintWriter(arq);
+				gravarArq.println(var.print());
 			}
-		
+
 			arq.close();
 		}
 		catch (IOException e)
@@ -98,5 +97,5 @@ public class Console
 			e.printStackTrace();
 		}
 	}
-	
+
 }

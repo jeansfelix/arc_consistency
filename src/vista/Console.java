@@ -1,11 +1,13 @@
 package vista;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import modelo.Variavel;
 import controle.LeitorDeArquivo;
 import controle.ArcoConsistencia;
+import controle.Rainhas;
 
 public class Console
 {
@@ -45,22 +47,29 @@ public class Console
 	
 	public void executarAlg() 
 	{
-		List<Variavel> variaveis = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
+		List<Variavel> resposta = new ArrayList<Variavel>();
 		
-		if (variaveis.isEmpty()) 
+		if (!nomeArquivo.contains("rainhas")) 
+		{
+			resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
+		}
+		else
+		{
+			Rainhas algParaRainhas = new Rainhas();
+			
+			List<Variavel> variaveis = algParaRainhas.inicializaCondicoesRainhas(leitor.getListaVariaveis());
+			resposta = algoritmo.arcoConsistencia(variaveis);
+		}
+		
+		if (resposta.isEmpty()) 
 		{
 			return;
 		}
 		
-		for (Variavel var : variaveis) 
+		for (Variavel var : resposta) 
 		{
 			var.print();
 		}
-	}
-	
-	public void executarAlgRainhas()
-	{
-		
 	}
 	
 }

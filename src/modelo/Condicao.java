@@ -27,6 +27,13 @@ public class Condicao
 			
 			return equalsModDif(Integer.parseInt(objPrincipal), Integer.parseInt(objSecundario), indice1, indice2);
 		}
+		if (operacao.equals("!modDif"))
+		{
+			int indice1 = variavel1.getId().charAt(1) - '0';
+			int indice2 = variavel2.getId().charAt(1) - '0';
+			
+			return !equalsModDif(Integer.parseInt(objPrincipal), Integer.parseInt(objSecundario), indice1, indice2);
+		}
 		return false;
 	}
 	

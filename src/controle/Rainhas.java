@@ -5,9 +5,10 @@ import java.util.List;
 import modelo.Condicao;
 import modelo.Variavel;
 
-public class Rainhas {
-	public void inicializaCondicoesRainhas(List<Variavel> variaveis) 
+public class Rainhas {	
+	public List<Variavel> inicializaCondicoesRainhas(List<Variavel> variaveis) 
 	{
+		
 		for (Variavel var : variaveis) 
 		{
 			for (Variavel var2 : variaveis) 
@@ -15,9 +16,11 @@ public class Rainhas {
 				if (!var.equals(var2)) 
 				{
 					var.addCondicao(new Condicao(var, var2, "!="));
-					var.addCondicao(new Condicao(var, var2, "modDif"));
+					var.addCondicao(new Condicao(var, var2, "!modDif"));
 				}
 			}
 		}
+		
+		return variaveis;
 	}
 }

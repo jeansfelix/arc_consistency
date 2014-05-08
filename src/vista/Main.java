@@ -12,6 +12,4 @@ public class Main {
 		
 		console.executarAlg();
 	}
-	
-	//testando
 }

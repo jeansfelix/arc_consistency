@@ -28,7 +28,7 @@ public class ArcoConsistencia
 		do 
 		{			
 			listaDeArcos.clear();
-			refazListaDeArcos(listaVariaveis);
+			refazListaDeArcosComDominiosCorretos(listaVariaveis);
 			
 			for (Arco a : listaDeArcos) 
 			{
@@ -45,7 +45,7 @@ public class ArcoConsistencia
 			listaDeArcosRemovidos.add(arco);
 			listaDeArcos.remove(0);
 			
-			if (reduzirArco())
+			if (reduzirDominio())
 			{			
 				if (arco.getVariavelPrincipal().getDominio().isEmpty()) 
 				{
@@ -54,8 +54,7 @@ public class ArcoConsistencia
 				}
 				else
 				{
-					retornaArcos(listaVariaveis);
-					System.out.println("--\n");
+					retornaArcosParaListaDeArcos(listaVariaveis);
 				}
 			}
 			
@@ -66,7 +65,7 @@ public class ArcoConsistencia
 		return listaVariaveis;
 	}
 
-	private void retornaArcos(List<Variavel> listaVariaveis)
+	private void retornaArcosParaListaDeArcos(List<Variavel> listaVariaveis)
 	{
 		for (Condicao c : arco.getVariavelPrincipal().getListaCondicoes())
 		{
@@ -98,12 +97,11 @@ public class ArcoConsistencia
 						listaDeArcosRemovidos.remove(novoArco);
 					}
 				}
-				c.print();
 			}
 		}
 	}
 
-	private void refazListaDeArcos(List<Variavel> listaVariaveis)
+	private void refazListaDeArcosComDominiosCorretos(List<Variavel> listaVariaveis)
 	{
 		for (Variavel variavel : listaVariaveis) 
 		{
@@ -129,7 +127,7 @@ public class ArcoConsistencia
 		}
 	}
 		
-	public Boolean reduzirArco() 
+	public Boolean reduzirDominio() 
 	{
 		Boolean change = false;
 		HashSet<String> novoDominio = new HashSet<String>();

@@ -50,8 +50,15 @@ public class LeitorDeArquivo {
 			linha = lerArquivo.readLine();
 			while (null != linha)
 			{ 
-				if(linha.contains("{")) criaVariavel(linha);
-				else if(linha.contains("=") || linha.contains("<") || linha.contains(">")) criaCondicao(linha);
+				if (linha.contains("{"))
+				{
+					criaVariavel(linha);
+				}
+				else if (linha.contains("=") || linha.contains("<")
+						|| linha.contains(">") || linha.contains("!modDif") || linha.contains("modDif"))
+				{
+					criaCondicao(linha);
+				}
 				
 				linha = lerArquivo.readLine();
 			}
@@ -93,7 +100,6 @@ public class LeitorDeArquivo {
 		
 		variavelNova=new Variavel(idVariavel.trim() ,dominio);
 		
-		variavelNova.print();
 		this.listaVariaveis.add(variavelNova);
 	}
 	
@@ -128,9 +134,6 @@ public class LeitorDeArquivo {
 		
 		return result;
 	}
-	
-	private void print(String s){System.out.println(s);}
-	private void print(char c){System.out.println(c);}
 	
 	private void criaCondicao(String linha)
 	{
@@ -177,8 +180,6 @@ public class LeitorDeArquivo {
 		indiceVariavel2=getIndiceVariavel(auxString.toString());
 		
 		novaCondicao=new Condicao(variavel1,variavel2,operacao);
-		
-		novaCondicao.print();
 		
 		listaCondicoes.add(novaCondicao);
 		

@@ -1,5 +1,8 @@
 package vista;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,7 +15,9 @@ import controle.Rainhas;
 public class Console
 {
 	Scanner scanner;
-	String nomeArquivo;
+	FileWriter arq;
+	String nomeArquivoEntrada;
+	String nomeArquivoSaida;
 	LeitorDeArquivo leitor;
 	ArcoConsistencia algoritmo;
 	
@@ -21,35 +26,46 @@ public class Console
 		algoritmo = new ArcoConsistencia();
 		scanner = new Scanner(System.in);
 		leitor = new LeitorDeArquivo();
+		nomeArquivoSaida = "";
 	}
 	
 	public void lerArquivo()
 	{
-			System.out.printf("Informe o nome de arquivo texto:\n");
-			nomeArquivo = scanner.nextLine();
+			System.out.printf("Informe o nome do arquivo de entrada:\n");
+			nomeArquivoEntrada = scanner.nextLine();
 			
-			if (!nomeArquivo.contains(".txt")) 
+			String[] split = nomeArquivoEntrada.split("\\\\");
+			
+			for (int i=0 ; i < split.length - 1 ; i++)
 			{
-				nomeArquivo += ".txt"; 
+				nomeArquivoSaida +=	split[i] + "\\";
 			}
 			
-			leitor.carregarArquivo(nomeArquivo);
+			nomeArquivoSaida += "saida.txt";
+			
+			System.out.println("O arquivo de saida se encontra em "+nomeArquivoSaida);
+			
+			if (!nomeArquivoEntrada.contains(".txt")) 
+			{
+				nomeArquivoEntrada += ".txt"; 
+			}
+			
+			leitor.carregarArquivo(nomeArquivoEntrada);
 			leitor.lerLinhas();
-			
-			System.out.println("\n");
-			
-			for ( Variavel var : leitor.getListaVariaveis() )
-			{
-				var.print();
-			}
-			System.out.println("\n");
+	}
+	
+	public void escreverArquivo(String variavel)
+	{
+		PrintWriter gravarArq = new PrintWriter(arq);
+		gravarArq.println(variavel);
+
 	}
 	
 	public void executarAlg() 
 	{
 		List<Variavel> resposta = new ArrayList<Variavel>();
 		
-		if (!nomeArquivo.contains("rainhas")) 
+		if (!nomeArquivoEntrada.contains("rainhas")) 
 		{
 			resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
 		}
@@ -66,9 +82,20 @@ public class Console
 			return;
 		}
 		
-		for (Variavel var : resposta) 
+		try
 		{
-			var.print();
+			arq = new FileWriter(nomeArquivoSaida);
+		
+			for (Variavel var : resposta) 
+			{
+				escreverArquivo(var.print());
+			}
+		
+			arq.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 	

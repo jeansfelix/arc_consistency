@@ -16,12 +16,24 @@ public class Variavel {
 		listaCondicoes=new ArrayList<Condicao>();
 	}
 	
-	public void print()
+	public String print()
 	{
-		System.out.println("ID: "+this.id+" | Dominio: "+this.dominio.toString() +
-				" | " + printListaCondicoes(listaCondicoes));
+		String print;
+		
+		print = this.id+" = ";
+		
+		for (String dominio : this.dominio) 
+		{
+			print += dominio + " ";
+		}
+		
+		return print;
 	}
 	
+	/**
+	 * Exibir lista de condições da variavel.
+	 * */
+	@SuppressWarnings("unused")
 	private String printListaCondicoes(List<Condicao> listaCondicoes) 
 	{
 		String condicoes = "[ ";

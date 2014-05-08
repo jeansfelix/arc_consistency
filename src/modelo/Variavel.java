@@ -97,4 +97,16 @@ public class Variavel {
 	public String toString() {
 		return id;
 	}
+	
+	public void addElementoNoDominio(String elemento)
+	{
+		this.dominio.add(elemento);
+	}
+
+	public Variavel()
+	{
+		this.id="";
+		this.dominio=new HashSet<String>();
+		listaCondicoes=new ArrayList<Condicao>();
+	}
 }

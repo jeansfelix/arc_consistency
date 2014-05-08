@@ -38,7 +38,7 @@ public class ArcoConsistencia
 			}
 			
 			listaDeArcos.removeAll(listaDeArcosRemovidos);
-			
+			if(listaDeArcos.isEmpty()) break;
 			arco = listaDeArcos.get(0);
 			listaDeArcosRemovidos.add(arco);
 			listaDeArcos.remove(0);
@@ -59,7 +59,37 @@ public class ArcoConsistencia
 			listaVariaveis.remove(arco.getVariavelPrincipal());
 			listaVariaveis.add(arco.getVariavelPrincipal());
 		} while (!listaDeArcos.isEmpty());
+
+		if(dominioPrecisaSerParticionado(listaVariaveis))
+		{
+			int indice=indiceVariavelParticionada(listaVariaveis);
+			List<Variavel> listaAuxiliar = new ArrayList<Variavel>();
+			List<Variavel> listaResultado = new ArrayList<Variavel>();
+			Variavel variavelParticionada=listaVariaveis.get(indice);
+			Variavel variavelAuxiliar=new Variavel();
+			
+			for(String elemento : variavelParticionada.getDominio())
+			{
+				variavelAuxiliar.setId(variavelParticionada.getId());
+				variavelAuxiliar.addElementoNoDominio(elemento);
+				variavelAuxiliar.setListaCondicoes(variavelParticionada.getListaCondicoes());
+				
+				listaAuxiliar.clear();
+				listaAuxiliar.addAll(listaVariaveis);
+				listaAuxiliar.remove(variavelParticionada);
+				listaAuxiliar.add(variavelAuxiliar);
+				
+				listaDeArcosRemovidos.clear();
+				listaAuxiliar=arcoConsistencia(listaAuxiliar);
+				
+				listaResultado.addAll(listaAuxiliar);
+				variavelAuxiliar.setDominio(new HashSet<String>());
+			}
+			
+			listaVariaveis=listaResultado;
+		}
 		
+		else{} 
 		return listaVariaveis;
 	}
 
@@ -169,5 +199,37 @@ public class ArcoConsistencia
 			}
 		}
 		return false;
+	}
+
+	private int indiceVariavelParticionada(List<Variavel> lista)
+	{
+		int indice=-1;
+		
+		for(Variavel variavel : lista)
+		{
+			if(variavel.getDominio().size()>1)
+			{
+				indice=lista.indexOf(variavel);
+				break;
+			}
+		}
+		
+		return indice;
+	}
+	
+	private boolean dominioPrecisaSerParticionado(List<Variavel> lista)
+	{
+		boolean resultado = false;
+		
+		for(Variavel variavel : lista)
+		{
+		  	if(variavel.getDominio().size()>1) 
+		  	{
+		  		resultado=true;
+		  	    break;
+		  	}
+		}		
+		
+		return resultado;
 	}
 }

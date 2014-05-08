@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -136,12 +137,23 @@ public class GUI
 		try
 		{
 			arq = new FileWriter(nomeArquivoSaida);
-
+			PrintWriter gravarArq = new PrintWriter(arq);
+			HashSet<Variavel> conjuntoAux = new HashSet<Variavel>();
+			int numVariaveis,count=0;
+			
+			conjuntoAux.addAll(resposta);
+			numVariaveis=conjuntoAux.size();
+			conjuntoAux.clear();
+			
+			gravarArq.println("//=================================//\n");
+			
 			for (Variavel var : resposta)
 			{
-				PrintWriter gravarArq = new PrintWriter(arq);
 				gravarArq.println(var.print());
+				count=(count+1)%numVariaveis;
+				if(count==0)gravarArq.println("//=================================//\n");
 			}
+			gravarArq.println("\n\n");
 
 			arq.close();
 		}

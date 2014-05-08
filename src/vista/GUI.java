@@ -50,7 +50,7 @@ public class GUI
 		nomeArquivoSaida = "";
 	}
 
-	private void criarFrame(String titulo, JPanel panel, Integer largura,Integer altura )
+	private void criarFrame(String titulo, JPanel panel, Integer largura, Integer altura)
 	{
 		frame.setSize(largura, altura);
 		frame.setResizable(false);
@@ -68,23 +68,23 @@ public class GUI
 			public void actionPerformed(ActionEvent e)
 			{
 				JPanel aviso = new JPanel();
-				JLabel informativo = new JLabel("O arquivo de saida se encontra em :");
+				JLabel informativo = new JLabel(
+						"O arquivo de saida se encontra em :");
 				JLabel arquivo = new JLabel();
-				
+
 				nomeArquivoEntrada = nomeArquivo.getText();
 
 				lerArquivo();
 				executarAlg();
-				
+
 				arquivo.setText(nomeArquivoSaida);
-				
+
 				aviso.add(informativo);
 				aviso.add(arquivo);
-				
-				criarFrame("Resultado", aviso, 300, 100);
-				
+
+				criarFrame("Resultado", aviso, 300, 80);
+
 				fundo.setVisible(false);
-				
 
 			}
 		});
@@ -93,8 +93,8 @@ public class GUI
 		fundo.add(nomeArquivo);
 		fundo.add(botaoConfirmar);
 
-		criarFrame(titulo, fundo, 300, 200);
-		
+		criarFrame(titulo, fundo, 300, 100);
+
 		frame.setVisible(true);
 	}
 
@@ -130,8 +130,7 @@ public class GUI
 		{
 			Rainhas algParaRainhas = new Rainhas();
 
-			List<Variavel> variaveis = algParaRainhas
-					.inicializaCondicoesRainhas(leitor.getListaVariaveis());
+			List<Variavel> variaveis = algParaRainhas.inicializaCondicoesRainhas(leitor.getListaVariaveis());
 			resposta = algoritmo.arcoConsistencia(variaveis);
 		}
 

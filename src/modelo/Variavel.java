@@ -1,20 +1,28 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
-public class Variavel {
+public class Variavel implements Comparable<Variavel>{
 	private String id;
 	private List<Condicao> listaCondicoes;
-	private HashSet<String> dominio;
+	private TreeSet<String> dominio;
 
-	public Variavel(String id, HashSet<String> dominio)
+	public Variavel(String id, TreeSet<String> dominio)
 	{
 		this.id=id;
 		this.dominio=dominio;
 		listaCondicoes=new ArrayList<Condicao>();
 	}
+	
+	public Variavel()
+	{
+		this.id="";
+		this.dominio=new TreeSet<String>();
+		listaCondicoes=new ArrayList<Condicao>();
+	}
+
 	
 	public String print()
 	{
@@ -61,12 +69,12 @@ public class Variavel {
 		listaCondicoes.add(condicao);
 	}
 	
-	public HashSet<String> getDominio()
+	public TreeSet<String> getDominio()
 	{
 		return dominio;
 	}
 
-	public void setDominio(HashSet<String> paramDominio) 
+	public void setDominio(TreeSet<String> paramDominio) 
 	{
 		dominio = paramDominio;
 	}
@@ -89,7 +97,7 @@ public class Variavel {
 	
 	@Override
 	public boolean equals(Object arg0)
-	{
+	{		
 		return hashCode() == arg0.hashCode();
 	}
 	
@@ -103,10 +111,9 @@ public class Variavel {
 		this.dominio.add(elemento);
 	}
 
-	public Variavel()
+	@Override
+	public int compareTo(Variavel o)
 	{
-		this.id="";
-		this.dominio=new HashSet<String>();
-		listaCondicoes=new ArrayList<Condicao>();
+		return id.compareTo(o.getId());
 	}
 }

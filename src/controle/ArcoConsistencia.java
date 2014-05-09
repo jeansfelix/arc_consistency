@@ -1,8 +1,9 @@
 package controle;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
 import modelo.Arco;
 import modelo.Condicao;
@@ -12,17 +13,130 @@ public class ArcoConsistencia
 {
 	private List<Arco> listaDeArcos;
 	private List<Arco> listaDeArcosRemovidos;
+	private List<List<Variavel>> resultado;
+	volatile private List<Variavel> variaveis;
 	private Arco arco;
 
 	public ArcoConsistencia() {
 		listaDeArcos = new ArrayList<Arco>();
 		listaDeArcosRemovidos = new ArrayList<Arco>();
+		resultado = new ArrayList<List<Variavel>>();
 		arco = null;
 	}
-
-	public List<Variavel> arcoConsistencia(List<Variavel> listaVariaveis)
+	
+	public List<List<Variavel>> executar(List<Variavel> listaVariaveis)
 	{
+		variaveis = listaVariaveis;
+		recursiva();
+		
+		return resultado;
+	}
 
+	
+	public void recursiva()
+	{
+		List<Variavel> auxiliar;
+		Variavel var1;
+		Variavel var2;
+		Object[] dominio;
+		
+		if (dominioPrecisaSerParticionado(variaveis)) 
+		{
+			Variavel aux = variavelQuePrecisaSerParticionada(variaveis);
+			var1 = new Variavel();
+			var2 = new Variavel();
+			auxiliar = new ArrayList<Variavel>();
+			dominio = aux.getDominio().toArray();
+			
+			int tam = aux.getDominio().size();
+			
+			var2.setId(aux.getId());
+			var2.setListaCondicoes(aux.getListaCondicoes());
+			
+			var1.setId(aux.getId());
+			var1.setListaCondicoes(aux.getListaCondicoes());
+			
+			for (int i=0; i<tam ; i++) 
+			{
+				if (i < tam /2) 
+				{
+					var1.addElementoNoDominio((String) dominio[i]);					
+				}
+				else 
+				{
+					var2.addElementoNoDominio((String) dominio[i]);
+				}
+			}
+			
+			auxiliar.addAll(variaveis);
+			
+			variaveis.remove(aux);
+			variaveis.add(var1);
+			
+			Collections.sort(variaveis);
+			
+			variaveis = arcoConsistencia(variaveis);
+			
+			if (!dominioPrecisaSerParticionado(variaveis))  
+			{
+				if (!variaveis.isEmpty()) 
+				{
+					List<Variavel> lista = new ArrayList<Variavel>();
+					lista.addAll(variaveis);
+					
+					if (!resultado.containsAll(lista)) 
+					{	
+						resultado.add(lista);
+					}
+				}
+			}else 
+			{
+				recursiva();
+			}
+			
+			variaveis.clear();
+			variaveis.addAll(auxiliar);
+			
+			variaveis.remove(aux);
+			variaveis.add(var2);
+			
+			Collections.sort(variaveis);
+			
+			variaveis = arcoConsistencia(variaveis);
+			
+			if (!dominioPrecisaSerParticionado(variaveis))  
+			{
+				if (!variaveis.isEmpty()) 
+				{
+					List<Variavel> lista = new ArrayList<Variavel>();
+					lista.addAll(variaveis);
+					
+					if (!resultado.containsAll(lista)) 
+					{	
+						resultado.add(lista);
+					}
+					
+				}
+			}else 
+			{
+				recursiva();
+			}
+			
+		}
+	}
+	
+	
+	
+	public void setVariaveis(List<Variavel> variaveis)
+	{
+		this.variaveis = variaveis;
+	}
+
+	public List<Variavel> arcoConsistencia(final List<Variavel> paramlistaVariaveis)
+	{
+		List<Variavel> listaVariaveis = paramlistaVariaveis;
+		listaDeArcosRemovidos.clear();
+		
 		do 
 		{			
 			listaDeArcos.clear();
@@ -38,7 +152,9 @@ public class ArcoConsistencia
 			}
 			
 			listaDeArcos.removeAll(listaDeArcosRemovidos);
-			if(listaDeArcos.isEmpty()) break;
+
+			if (listaDeArcos.isEmpty()) {return new ArrayList<Variavel>();}
+			
 			arco = listaDeArcos.get(0);
 			listaDeArcosRemovidos.add(arco);
 			listaDeArcos.remove(0);
@@ -59,37 +175,9 @@ public class ArcoConsistencia
 			listaVariaveis.remove(arco.getVariavelPrincipal());
 			listaVariaveis.add(arco.getVariavelPrincipal());
 		} while (!listaDeArcos.isEmpty());
-
-		if(dominioPrecisaSerParticionado(listaVariaveis))
-		{
-			int indice=indiceVariavelParticionada(listaVariaveis);
-			List<Variavel> listaAuxiliar = new ArrayList<Variavel>();
-			List<Variavel> listaResultado = new ArrayList<Variavel>();
-			Variavel variavelParticionada=listaVariaveis.get(indice);
-			Variavel variavelAuxiliar=new Variavel();
-			
-			for(String elemento : variavelParticionada.getDominio())
-			{
-				variavelAuxiliar.setId(variavelParticionada.getId());
-				variavelAuxiliar.addElementoNoDominio(elemento);
-				variavelAuxiliar.setListaCondicoes(variavelParticionada.getListaCondicoes());
-				
-				listaAuxiliar.clear();
-				listaAuxiliar.addAll(listaVariaveis);
-				listaAuxiliar.remove(variavelParticionada);
-				listaAuxiliar.add(variavelAuxiliar);
-				
-				listaDeArcosRemovidos.clear();
-				listaAuxiliar=arcoConsistencia(listaAuxiliar);
-				
-				listaResultado.addAll(listaAuxiliar);
-				variavelAuxiliar.setDominio(new HashSet<String>());
-			}
-			
-			listaVariaveis=listaResultado;
-		}
 		
-		else{} 
+		Collections.sort(listaVariaveis);
+		
 		return listaVariaveis;
 	}
 
@@ -158,7 +246,7 @@ public class ArcoConsistencia
 	public Boolean reduzirDominio() 
 	{
 		Boolean change = false;
-		HashSet<String> novoDominio = new HashSet<String>();
+		TreeSet<String> novoDominio = new TreeSet<String>();
 		
 		for ( String objPrincipal : arco.getVariavelPrincipal().getDominio() )
 		{
@@ -201,35 +289,31 @@ public class ArcoConsistencia
 		return false;
 	}
 
-	private int indiceVariavelParticionada(List<Variavel> lista)
+	private Variavel variavelQuePrecisaSerParticionada(List<Variavel> lista)
 	{
-		int indice=-1;
-		
+	
 		for(Variavel variavel : lista)
 		{
 			if(variavel.getDominio().size()>1)
 			{
-				indice=lista.indexOf(variavel);
-				break;
+				return variavel;
 			}
 		}
 		
-		return indice;
+		return null;
 	}
 	
 	private boolean dominioPrecisaSerParticionado(List<Variavel> lista)
 	{
-		boolean resultado = false;
 		
 		for(Variavel variavel : lista)
 		{
 		  	if(variavel.getDominio().size()>1) 
 		  	{
-		  		resultado=true;
-		  	    break;
+		  		return true;
 		  	}
 		}		
 		
-		return resultado;
+		return false;
 	}
 }

@@ -55,9 +55,9 @@ public class Console
 
 	public void executarAlg()
 	{
-		List<Variavel> resposta = new ArrayList<Variavel>();
+		List<List<Variavel>> resposta = new ArrayList<List<Variavel>>();
 
-		resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
+		resposta = algoritmo.executar(leitor.getListaVariaveis());
 
 		if (resposta.isEmpty())
 		{
@@ -67,17 +67,26 @@ public class Console
 		escreverEmArquivo(resposta);
 	}
 
-	private void escreverEmArquivo(List<Variavel> resposta)
+	private void escreverEmArquivo(List<List<Variavel>> conjunto)
 	{
 		try
 		{
 			arq = new FileWriter(nomeArquivoSaida);
-
-			for (Variavel var : resposta)
-			{
-				PrintWriter gravarArq = new PrintWriter(arq);
-				gravarArq.println(var.print());
+			PrintWriter gravarArq = new PrintWriter(arq);
+			int i=0;
+			
+			for (List<Variavel> resposta : conjunto) {
+				++i;
+				gravarArq.println("Resp " + i);
+				
+				for (Variavel var : resposta)
+				{
+					gravarArq.println(var.print());
+				}
+				gravarArq.println("//=================================//\n");
 			}
+			
+			gravarArq.println("\n\n");
 
 			arq.close();
 		}

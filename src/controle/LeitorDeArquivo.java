@@ -6,12 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 import modelo.Condicao;
 import modelo.Variavel;
-import controle.Rainhas;
 
 
 public class LeitorDeArquivo {
@@ -60,7 +59,7 @@ public class LeitorDeArquivo {
 				
 				linha = lerArquivo.readLine();
 			}
-			
+
 			if(nomeArquivo.contains("rainhas"))
 			{
 				Rainhas r=new Rainhas();
@@ -81,7 +80,7 @@ public class LeitorDeArquivo {
 		
 		String idVariavel,valor;
 		
-		HashSet<String> dominio=new HashSet<String>();
+		TreeSet<String> dominio=new TreeSet<String>();
 		
 		Variavel variavelNova;
 		

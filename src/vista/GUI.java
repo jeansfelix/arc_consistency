@@ -139,21 +139,26 @@ public class GUI
 			arq = new FileWriter(nomeArquivoSaida);
 			PrintWriter gravarArq = new PrintWriter(arq);
 			HashSet<Variavel> conjuntoAux = new HashSet<Variavel>();
-			int numVariaveis,count=0;
+			int numVariaveis,count=0, i=0;
 			
 			conjuntoAux.addAll(resposta);
 			numVariaveis=conjuntoAux.size();
 			conjuntoAux.clear();
 			
-			gravarArq.println("//=================================//\n");
+			gravarArq.println("//=================================//");
 			
 			for (Variavel var : resposta)
 			{
 				gravarArq.println(var.print());
 				count=(count+1)%numVariaveis;
-				if(count==0)gravarArq.println("//=================================//\n");
+				if (count==0) 
+				{
+					++i;
+					gravarArq.println("Resp" + i);
+					gravarArq.println("//=================================//\n");
+				}
 			}
-			gravarArq.println("\n\n");
+			gravarArq.println("\n");
 
 			arq.close();
 		}

@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -118,11 +117,11 @@ public class GUI
 		leitor.lerLinhas();
 	}
 
-	private void executarAlg()
+	public void executarAlg()
 	{
-		List<Variavel> resposta = new ArrayList<Variavel>();
+		List<List<Variavel>> resposta = new ArrayList<List<Variavel>>();
 
-		resposta = algoritmo.arcoConsistencia(leitor.getListaVariaveis());
+		resposta = algoritmo.executar(leitor.getListaVariaveis());
 
 		if (resposta.isEmpty())
 		{
@@ -132,33 +131,28 @@ public class GUI
 		escreverEmArquivo(resposta);
 	}
 
-	private void escreverEmArquivo(List<Variavel> resposta)
+	private void escreverEmArquivo(List<List<Variavel>> conjunto)
 	{
 		try
 		{
 			arq = new FileWriter(nomeArquivoSaida);
 			PrintWriter gravarArq = new PrintWriter(arq);
-			HashSet<Variavel> conjuntoAux = new HashSet<Variavel>();
-			int numVariaveis,count=0, i=0;
+			int i=0;
 			
-			conjuntoAux.addAll(resposta);
-			numVariaveis=conjuntoAux.size();
-			conjuntoAux.clear();
-			
-			gravarArq.println("//=================================//");
-			
-			for (Variavel var : resposta)
-			{
-				gravarArq.println(var.print());
-				count=(count+1)%numVariaveis;
-				if (count==0) 
+			for (List<Variavel> resposta : conjunto) {
+				++i;
+				gravarArq.println("Resp " + i);
+				
+				for (Variavel var : resposta)
 				{
-					++i;
-					gravarArq.println("Resp" + i);
-					gravarArq.println("//=================================//\n");
+					//imprimeTab(gravarArq, var);
+					
+					gravarArq.println(var.print());
 				}
+				gravarArq.println("//=================================//\n");
 			}
-			gravarArq.println("\n");
+			
+			gravarArq.println("\n\n");
 
 			arq.close();
 		}
@@ -167,5 +161,81 @@ public class GUI
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Metodo para imprimir uma lista formatada de rainhas.
+	 * <li>
+	 * 	<i>Descomente-o em escreverEmArquivo(List<List<Variavel>> conjunto)</i>
+	 * 	<i>Comente gravarArq.println(var.print()); em escreverEmArquivo(List<List<Variavel>> conjunto)</i>
+	 * </li>
+	 * */
+	@SuppressWarnings("unused")
+	private void imprimeTab(PrintWriter gravarArq, Variavel var) 
+	{
+		List<String> linha = new ArrayList<String>(); 
+		
+		if (var.getId().equalsIgnoreCase("Q1")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q2")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q3")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q4")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q5")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q6")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q7")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q8")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+	}
 
+	private void printLinhaTab(PrintWriter gravarArq, Variavel var,
+			List<String> linha)
+	{
+		for (int i=1; i<9; i++) 
+		{
+			if (i != Integer.parseInt((String) var.getDominio().toArray()[0]) ) 
+			{
+				linha.add("0");
+			}
+			else {
+				linha.add("R");
+			}
+		}
+		gravarArq.println(linha);
+	}
 }

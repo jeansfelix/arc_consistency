@@ -81,7 +81,9 @@ public class Console
 				
 				for (Variavel var : resposta)
 				{
-					gravarArq.println(var.print());
+					imprimeTab(gravarArq, var);
+					
+					//gravarArq.println(var.print());
 				}
 				gravarArq.println("//=================================//\n");
 			}
@@ -94,6 +96,75 @@ public class Console
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private void imprimeTab(PrintWriter gravarArq, Variavel var) 
+	{
+		List<String> linha = new ArrayList<String>(); 
+		
+		if (var.getId().equalsIgnoreCase("Q1")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q2")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q3")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q4")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q5")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q6")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q7")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+		
+		if (var.getId().equalsIgnoreCase("Q8")) 
+		{
+			printLinhaTab(gravarArq, var, linha);
+			return;
+		}
+	}
+
+	private void printLinhaTab(PrintWriter gravarArq, Variavel var,
+			List<String> linha)
+	{
+		for (int i=1; i<9; i++) 
+		{
+			if (i != Integer.parseInt((String) var.getDominio().toArray()[0]) ) 
+			{
+				linha.add("0");
+			}
+			else {
+				linha.add("R");
+			}
+		}
+		gravarArq.println(linha);
 	}
 
 }

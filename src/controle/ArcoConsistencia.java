@@ -77,22 +77,7 @@ public class ArcoConsistencia
 			
 			variaveis = arcoConsistencia(variaveis);
 			
-			if (!dominioPrecisaSerParticionado(variaveis))  
-			{
-				if (!variaveis.isEmpty()) 
-				{
-					List<Variavel> lista = new ArrayList<Variavel>();
-					lista.addAll(variaveis);
-					
-					if (!resultado.containsAll(lista)) 
-					{	
-						resultado.add(lista);
-					}
-				}
-			}else 
-			{
-				recursiva();
-			}
+			chamadaRecursiva();
 			
 			variaveis.clear();
 			variaveis.addAll(auxiliar);
@@ -104,28 +89,48 @@ public class ArcoConsistencia
 			
 			variaveis = arcoConsistencia(variaveis);
 			
-			if (!dominioPrecisaSerParticionado(variaveis))  
+			chamadaRecursiva();
+			
+		}
+		else 
+		{
+			auxiliar = arcoConsistencia(variaveis);
+			if (!auxiliar.isEmpty()) 
 			{
-				if (!variaveis.isEmpty()) 
-				{
-					List<Variavel> lista = new ArrayList<Variavel>();
-					lista.addAll(variaveis);
-					
-					if (!resultado.containsAll(lista)) 
-					{	
-						resultado.add(lista);
-					}
-					
-				}
-			}else 
+				adicionaNovoResultado(variaveis);				
+			}
+		}
+	}
+
+	private void chamadaRecursiva()
+	{
+		if (!dominioPrecisaSerParticionado(variaveis))  
+		{
+			variaveis = arcoConsistencia(variaveis);
+			if (!variaveis.isEmpty()) 
 			{
-				recursiva();
+				adicionaNovoResultado(variaveis);				
+			}
+		}else 
+		{
+			recursiva();
+		}
+	}
+
+	private void adicionaNovoResultado(List<Variavel> listaVariaveis)
+	{
+		if (!listaVariaveis.isEmpty()) 
+		{
+			List<Variavel> lista = new ArrayList<Variavel>();
+			lista.addAll(listaVariaveis);
+			
+			if (!resultado.containsAll(lista)) 
+			{	
+				resultado.add(lista);
 			}
 			
 		}
-	}
-	
-	
+	}	
 	
 	public void setVariaveis(List<Variavel> variaveis)
 	{

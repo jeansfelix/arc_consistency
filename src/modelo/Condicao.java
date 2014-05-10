@@ -90,6 +90,7 @@ public class Condicao
 	@Override
 	public boolean equals(Object obj) {
 		Condicao nova = (Condicao) obj;
+		
 		return nova.getVariavel1().equals(variavel1) &&
 				nova.getVariavel2().equals(variavel2) &&
 				nova.getOperacao().equals(operacao);

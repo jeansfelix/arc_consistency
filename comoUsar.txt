@@ -1,0 +1,26 @@
+Existe um .jar executável no zip do projeto.
+
+Execute este .jar e forneça o arquivo texto.
+
+Instruções para N-Rainhas.
+
+	Executar o algoritmo com a entrada sendo um arquivo de texto chamado "rainhas".
+	Este deve estar na modelagem apresentada em sala de aula.
+	No caso das N-rainhas para facilidade não necessita-se passar as condições.
+	
+Instruções para Monitores em aulas de laboratório.
+
+	Executar o algoritmo com a entrada sendo um arquivo de texto com nome diferente de rainhas.
+	Este de deve estar na modelagem semelhante ao arquivo de teste monitores.txt.
+	Nesta modelagem devemos passar a variavel que corresponde ao nome do monitor (não devem haver monitores com o mesmo nome).
+	Em seguida "=" e em seguida seu domínio.
+	O domínio para os monitores deve ser um conjunto horários válidos de monitoria que este pode ocupar.
+	
+Instruções para Alocação de Turmas em Salas de aula em um determinado horário.
+
+	Executar o algoritmo com a entrada sendo um arquivo de texto com nome diferente de rainhas.
+	Este de deve estar na modelagem semelhante ao arquivo de teste turmas.txt.
+	Nesta modelagem devemos passar a variavel que corresponde ao nome do da turma (não devem haver turmas com o mesmo nome).
+	Em seguida "=" e em seguida seu domínio.
+	O dominio para as turmas deverá ser a string contendo "sala Horário" assim como no arquivo turmas.txt.
+	Os horários serão horários 

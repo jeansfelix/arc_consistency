@@ -1,0 +1,7 @@
+M1 = {segunda 15:00,quarta 12:00}
+M2 = {segunda 12:00,quarta 12:00}
+M3 = {quarta 8:00,quinta 12:00}
+
+M1!=M2
+M1!=M3
+M2!=M3

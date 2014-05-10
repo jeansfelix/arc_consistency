@@ -149,7 +149,7 @@ public class GUI
 					
 					gravarArq.println(var.print());
 				}
-				gravarArq.println("//=================================//\n");
+				gravarArq.println(" ");
 			}
 			
 			gravarArq.println("\n\n");

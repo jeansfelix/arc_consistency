@@ -147,14 +147,7 @@ public class ArcoConsistencia
 			listaDeArcos.clear();
 			refazListaDeArcosComDominiosCorretos(listaVariaveis);
 			
-			for (Arco a : listaDeArcos) 
-			{
-				if (listaDeArcosRemovidos.contains(a)) 
-				{
-					listaDeArcosRemovidos.remove(a);
-					listaDeArcosRemovidos.add(a);
-				}
-			}
+			refazListaDeArcosRemovidos();
 			
 			listaDeArcos.removeAll(listaDeArcosRemovidos);
 
@@ -173,51 +166,28 @@ public class ArcoConsistencia
 				}
 				else
 				{
-					retornaArcosParaListaDeArcos(listaVariaveis);
+					listaDeArcosRemovidos.clear();
+					refazListaDeArcosComDominiosCorretos(listaVariaveis);
 				}
 			}
 			
 			listaVariaveis.remove(arco.getVariavelPrincipal());
 			listaVariaveis.add(arco.getVariavelPrincipal());
+			
+			Collections.sort(listaVariaveis);
 		} while (!listaDeArcos.isEmpty());
-		
-		Collections.sort(listaVariaveis);
 		
 		return listaVariaveis;
 	}
 
-	private void retornaArcosParaListaDeArcos(List<Variavel> listaVariaveis)
+	private void refazListaDeArcosRemovidos()
 	{
-		for (Condicao c : arco.getVariavelPrincipal().getListaCondicoes())
+		for (Arco a : listaDeArcos) 
 		{
-			if (!c.equals(arco.getCondicao()))
+			if (listaDeArcosRemovidos.contains(a)) 
 			{
-				Variavel var1, var2;
-				int indice1, indice2;
-				
-				if (arco.getVariavelPrincipal().equals(c.getVariavel1())) 
-				{
-					indice1 = listaVariaveis.indexOf(c.getVariavel2());
-					indice2 = listaVariaveis.indexOf(c.getVariavel1());
-				}
-				else 
-				{
-					indice1 = listaVariaveis.indexOf(c.getVariavel1());
-					indice2 = listaVariaveis.indexOf(c.getVariavel2());
-				}
-				var1 = listaVariaveis.get(indice1);
-				var2 = listaVariaveis.get(indice2);
-				
-				Arco  novoArco = new Arco(var1,var2, c);
-				
-				if (!listaDeArcos.contains(novoArco)) 
-				{
-					listaDeArcos.add(novoArco);
-					if (listaDeArcosRemovidos.contains(novoArco)) 
-					{
-						listaDeArcosRemovidos.remove(novoArco);
-					}
-				}
+				listaDeArcosRemovidos.remove(a);
+				listaDeArcosRemovidos.add(a);
 			}
 		}
 	}

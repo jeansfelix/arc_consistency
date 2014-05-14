@@ -106,7 +106,7 @@ public class GUI
 			nomeArquivoSaida += split[i] + "\\";
 		}
 
-		nomeArquivoSaida += "saida.txt";
+		nomeArquivoSaida += "saida"+ "_" + split[split.length - 1];
 
 		if (!nomeArquivoEntrada.contains(".txt"))
 		{
@@ -152,7 +152,7 @@ public class GUI
 				gravarArq.println(" ");
 			}
 			
-			gravarArq.println("\n\n");
+			gravarArq.println("\n");
 
 			arq.close();
 		}
